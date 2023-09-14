@@ -1,6 +1,6 @@
 import random
 
-words = ['universidad']
+words = ['universidad','bicicleta','ramazzoti', 'williams','auxiliar','guitarras']
 word = random.choice(words)
 
 attempts = 0
