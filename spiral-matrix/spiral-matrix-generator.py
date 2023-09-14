@@ -1,5 +1,7 @@
 import numpy as np
 
+# THIS CODE WAS NO MADE BY ME
+
 def spiral_matrix_generator(n):
     if n < 1:
         return []
