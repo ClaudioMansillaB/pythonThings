@@ -26,7 +26,7 @@ def new_dices(current_dices):
 
 
 def is_ladder(dices):
-    
+    pass
 dices = [1,2,3,4,5,6]
 
 current_dices = [random.choice(dices) for _ in range(6)]
