@@ -4,32 +4,18 @@ def new_dices(current_dices):
 
     dices = [1,2,3,4,5,6]
 
-    antique_dices = []
+    list_options = list(list_options)
+    change_dices = []
 
-    print('Do you want to change some dices?')
-    print('If yes, Type the position of number that do you want to change (1-6): (example: 1,2,3)')
-    print('If no, just type no')
-    list_options = input().upper()
-    made_change = False
-    if list_options != 'NO':
-        made_change = True
-        antique_dices.append(current_dices)
-
-        list_options = list(list_options)
-        change_dices = []
-
-        for number in list_options:
-            if number != ',':
-                change_dices.append(int(number)-1)
-        
-        for number in range(6):
-            if number in change_dices:
-                current_dices[number] = random.choice(dices)
-        
-    else:
-        print('Keeping numbers and pass turn')
+    for number in list_options:
+        if number != ',':
+            change_dices.append(int(number)-1)
     
-    return current_dices,made_change,antique_dices
+    for number in range(6):
+        if number in change_dices:
+            current_dices[number] = random.choice(dices)
+        
+    return current_dices
 
 
 def is_ladder(dices):
@@ -67,7 +53,7 @@ def is_generala(dices):
     else:
         return False
     
-def sum_points(dices,antique_dices,made_changes):
+def sum_points(dices,antique_dices,made_changes,used_options):
 
     turn_points = 0
 
@@ -77,9 +63,7 @@ def sum_points(dices,antique_dices,made_changes):
     if what_sum == 2:
         dices = antique_dices[1]
     elif what_sum == 1:
-        dices = antique_dices[0]
-
-    used_options = [0 for _ in range(10)] #Escribir fuera, igual que la doble generala
+        dices = antique_dices[0] #Escribir fuera, igual que la doble generala
 
     options = ["1. Sum of 1's","2. Sum of 2's","3. Sum of 3's","4. Sum of 4's","5. Sum of 5's","6. Sum of 6's",
               '7. Ladder','8. Full','9. Poker','10. Generala' ]
@@ -143,22 +127,51 @@ def sum_points(dices,antique_dices,made_changes):
             print('There is no valid poker, choose another categorie')
             turn_points,used_options = sum_points(dices,antique_dices,made_changes)
 
-
-
     
 dices = [1,2,3,4,5,6]
 
 dices = [5,5,5,4,1]
 
 antique_dices = []
-made_changes = False
 
+points = 0
+used_options = [0 for _ in range(10)]
+for _ in range(10):
+    #generala_numbers = 0
+    current_dices = [random.choice(dices) for _ in range(5)]
+    print('Current dices: ' + str(current_dices))
+    antique_dices = []
+    print('Do you want to change some dices?')
+    print('If yes, Type the position of number that do you want to change (1-6): (example: 1,2,3)')
+    print('If no, just type no')
+    list_options = input().upper()
 
-sum_points(dices,antique_dices,made_changes)
+    if list_options != 'NO':
+        made_changes = False
+        turn_points, used_options_turn = sum_points(dices,antique_dices,made_changes,used_options)
+    else:
+        made_changes = True
+        antique_dices.append(current_dices)
+        current_dices= new_dices(current_dices)
+        print('Do you want to change some dices again?')
+        print('If yes, Type the position of number that do you want to change (1-6): (example: 1,2,3)')
+        print('If no, just type no')
+        if list_options != 'NO':
+            turn_points, used_options_turn = sum_points(dices,antique_dices,made_changes,used_options)
+        else:
+            antique_dices.append(current_dices)
+            current_dices= new_dices(current_dices)
+            turn_points, used_options_turn = sum_points(dices,antique_dices,made_changes,used_options)
 
-# for _ in range(10):
-#     current_dices = [random.choice(dices) for _ in range(5)]
-#     current_dices,made_changes, antique_dices = new_dices(current_dices)
+    print(current_dices)
+    
+    
+    points += turn_points
+
+    for op in range(len(used_options_turn)):
+        if used_options_turn[op] != 0:
+            used_options[op] = used_options_turn[op]
+
 
 
 
