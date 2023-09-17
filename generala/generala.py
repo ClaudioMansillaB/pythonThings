@@ -146,7 +146,7 @@ for _ in range(10):
     print('If no, just type no')
     list_options = input().upper()
 
-    if list_options != 'NO':
+    if list_options == 'NO':
         made_changes = False
         turn_points, used_options_turn = sum_points(dices,antique_dices,made_changes,used_options)
     else:
@@ -156,11 +156,11 @@ for _ in range(10):
         print('Do you want to change some dices again?')
         print('If yes, Type the position of number that do you want to change (1-6): (example: 1,2,3)')
         print('If no, just type no')
-        if list_options != 'NO':
+        if list_options == 'NO':
             turn_points, used_options_turn = sum_points(dices,antique_dices,made_changes,used_options)
         else:
             antique_dices.append(current_dices)
-            current_dices= new_dices(current_dices)
+            current_dices = new_dices(current_dices)
             turn_points, used_options_turn = sum_points(dices,antique_dices,made_changes,used_options)
 
     print(current_dices)
